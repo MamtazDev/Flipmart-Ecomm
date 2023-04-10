@@ -3,7 +3,7 @@
 @section('content')
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        
+
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row">
@@ -30,6 +30,10 @@
                             <input type="hidden" name="reply_id" value="{{ $data->id }}">
                             <input type="hidden" name="name" value="{{ Auth::user()->name }}">
                             <div class="form-group">
+                                <label>Comment</label>
+                                <input class="form-control" type="text"  value="{{ $data->description }}" readonly>
+                            </div>
+                            <div class="form-group">
                                 <label>Comment Reply</label>
                                 <textarea name="description" rows="7" class="form-control" placeholder="Write here..."></textarea>
                             </div>
@@ -37,7 +41,7 @@
                         </form>
                     </div>
                 </div>
-            </div><
+            </div>
         </section>
     </div>
 

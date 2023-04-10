@@ -1,5 +1,5 @@
 @extends('layouts.fontend.fontend-master')
-@section('title', 'Blogs')
+@section('title'){{ $blog->title }} @endsection
 @section('content')
 
 <div class="body-content outer-top-xs" id="top-banner-and-menu">
@@ -96,7 +96,7 @@
                                 @include('layouts.fontend.blog.comment-loadmore')
                                 </div>
 
-                                @if (count($blogcommentsall) > 0)
+                                @if (count($blogcommentsall) > 3 )
                                     <div class="load_more_button">
                                         <div class="post-load-more col-md-12">
                                             <a href="#!" id="load-more" blog-id="{{$blog->id}}" data-count="3" class="load_more btn btn-upper btn-primary" >
@@ -130,7 +130,7 @@
                                 </div>
 
                                 <div class="col-md-12">
-                                    @if(Auth::check())
+                                    @if((Auth::check()) && (Auth::user()->role_id == 2) )
                                     <form class="register-form" role="form" action="{{ route('blog.comment.store') }}" method="post">
                                         @csrf
                                         <input type="hidden" name="blog_id" value="{{ $blog->id }}">

@@ -41,7 +41,7 @@ class DiscountBannerController extends Controller
         $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
         $location = 'backend/images/discountbanner/';
         $final_image = $location.$name_gen;
-        Image::make($image)->resize(848, 201)->save($final_image);
+        Image::make($image)->resize(850, 200)->save($final_image);
         return $final_image;
     }
 
@@ -59,8 +59,6 @@ class DiscountBannerController extends Controller
         $disBannerImage->save();
 
         return redirect()->route('banner.index')->with('success', 'Data added successfully');
-
-
     }
 
     /**
@@ -95,18 +93,24 @@ class DiscountBannerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'image_left' => 'image|mimes:jpg,png,jpeg,gif,svg',
-         ]);
-        $banners = DiscountBanner::findOrFail($id);
+        if($request->file('image_left'))
+        {
+            $request->validate([
+                'image_left' => 'image|mimes:jpg,png,jpeg,gif,svg',
+             ]);
 
-        $request->file('image_left');
-        unlink( $banners->image_left);
-        $image_left = $request->file('image_left');
-        $final_image_left  = $this->image_settings($image_left);
-        $banners->image_left = $final_image_left;
-        $banners->save();
-        return redirect()->route('banner.index')->with('success', 'Data update successfully');
+            $banners = DiscountBanner::findOrFail($id);
+            $image_left = $request->file('image_left');
+            unlink( $banners->image_left);
+            $final_image_left  = $this->image_settings($image_left);
+            $banners->image_left = $final_image_left;
+            $banners->save();
+
+            return redirect()->route('banner.index')->with('success', 'Data update successfully');
+
+        }else{
+            return redirect()->back()->with('fail', 'Nothing to update');
+        }
 
     }
 
@@ -118,9 +122,20 @@ class DiscountBannerController extends Controller
      */
     public function destroy($id)
     {
-        // $banners = DiscountBanner::findOrFail($id);
-        // unlink($banners->image_left);
-        // $banners->delete();
-        // return redirect()->route('banner.index')->with('success', 'Data delete successfully');
+        $banners = DiscountBanner::findOrFail($id);
+        unlink($banners->image_left);
+        $banners->delete();
+        return redirect()->route('banner.index')->with('success', 'Data delete successfully');
     }
+
+     //status Check
+     public function pageBannerStatusOn(Request $request)
+     {
+         // return $request->status;
+         $banner = DiscountBanner::first();
+         $banner->update([
+             'status' => $request->status
+         ]);
+         return response()->json();
+     }
 }

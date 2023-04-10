@@ -49,31 +49,29 @@
                                     </div>
                                     <div class="form-group">
                                         <label>SubCategory Name Bn</label>
-                                        <input type="text" class="form-control" value="{{ $subcategory->subcategory_name_bn }}" name="subcategory_name_bn">
+                                        <input type="text" class="form-control @error('subcategory_name_bn') is-invalid @enderror" value="{{ $subcategory->subcategory_name_bn }}" name="subcategory_name_bn">
                                         @error('subcategory_name_bn')
                                         <p class="text-danger font-weight-bold">{{ $message }}</p>
                                         @enderror
                                     </div>
                                     <div class="form-group">
                                         <label>SubCategory Name En</label>
-                                        <input type="text" class="form-control"  value="{{ $subcategory->subcategory_name_en }}" name="subcategory_name_en">
+                                        <input type="text" class="form-control @error('subcategory_name_en') is-invalid @enderror"  value="{{ $subcategory->subcategory_name_en }}" name="subcategory_name_en">
                                         @error('subcategory_name_en')
                                         <p class="text-danger font-weight-bold">{{ $message }}</p>
                                         @enderror
                                     </div>
 
                                     <div class="form-group">
-                                        <input type="submit"  name="submit" value="Update" class="btn btn-success btn-lg">
+                                        <input type="submit"  name="submit" value="Update" class="btn btn-warning custom_lg_btn">
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div><!-- /.container-fluid -->
+            </div>
         </section>
-        <!-- /.content -->
     </div>
-    <!-- /.content-wrapper -->
 @endsection
 

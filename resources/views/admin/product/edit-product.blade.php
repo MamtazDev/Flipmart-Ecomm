@@ -9,7 +9,7 @@
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-sm-10 m-auto">
+                    <div class="col-md-10 m-auto">
                         <div class="breadrow d-flex justify-content-between mb-3 mt-4">
                             <div class="item_1">
                                 <ul class="breadcrumb">
@@ -28,7 +28,7 @@
                     <div class="col-md-10 m-auto">
                         <div class="card card-warning">
                             <div class="card-header">
-                                <h3 class="card-title">Update Product</h3>
+                                <h4>Update Product</h4>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -39,8 +39,8 @@
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Select Category</label>
-                                                <select class="form-control" name="category_id">
+                                                <label>Select Category<span style="color:red">*</span></label>
+                                                <select class="form-control @error('category_id') is-invalid @enderror" name="category_id">
                                                     <option label="--choose--"></option>
                                                     @foreach($categorys as $item)
                                                         <option value="{{ $item->id }}" {{ $item->id == $products->category_id ? "selected" : "" }} >{{ $item->category_name_en }}</option>
@@ -53,8 +53,8 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Select SubCategory</label>
-                                                <select class="form-control" name="subcategory_id">
+                                                <label>Select SubCategory<span style="color:red">*</span></label>
+                                                <select class="form-control @error('subcategory_id') is-invalid @enderror" name="subcategory_id">
                                                     <option label="--choose--"></option>
                                                     @foreach($subcategories as $subcategory)
                                                         <option value="{{ $subcategory->id }}" {{ $subcategory->id == $products->subcategory_id ? "selected" : "" }} >{{ $subcategory->subcategory_name_en }}</option>
@@ -80,11 +80,12 @@
                                             </div>
                                         </div>
                                         {{-- all categories --}}
+
                                         {{-- Product Name --}}
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Product Name English</label>
-                                                <input type="text" class="form-control"  id="title" value="{{ $products->product_name_en }}" name="product_name_en" placeholder="Dell Laptop ...">
+                                                <label>Product Name English<span style="color:red">*</span></label>
+                                                <input type="text" class="form-control @error('product_name_en') is-invalid @enderror"  id="title" value="{{ $products->product_name_en }}" name="product_name_en" placeholder="Dell Laptop ...">
                                                 @error('product_name_en')
                                                 <p class="text-danger font-weight-bold">{{ $message }}</p>
                                                 @enderror
@@ -92,18 +93,19 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Product Name Bangle</label>
-                                                <input type="text" class="form-control" id="title2" value="{{  $products->product_name_bn }}" name="product_name_bn" placeholder="ডেল ল্যাপটপ ...">
+                                                <label>Product Name Bangle<span style="color:red">*</span></label>
+                                                <input type="text" class="form-control @error('product_name_bn') is-invalid @enderror" id="title2" value="{{  $products->product_name_bn }}" name="product_name_bn" placeholder="ডেল ল্যাপটপ ...">
                                                 @error('product_name_bn')
                                                 <p class="text-danger font-weight-bold">{{ $message }}</p>
                                                 @enderror
                                             </div>
                                         </div>
                                         {{-- Product Name --}}
+
                                         {{-- Product Slug Name --}}
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Slug Name English</label>
+                                                <label>Slug Name English<span style="color:red">*</span></label>
                                                 <input type="text" class="form-control" id="slug"  value="{{ $products->product_slug_en }}" name="product_slug_en" placeholder="Dell-Laptop ...">
                                                 @error('product_slug_en')
                                                     <p class="text-danger font-weight-bold">{{ $message }}</p>
@@ -112,7 +114,7 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Slug Name Bangle</label>
+                                                <label>Slug Name Bangle<span style="color:red">*</span></label>
                                                 <input type="text" class="form-control" id="slug2" value="{{ $products->product_slug_bn }}" name="product_slug_bn" placeholder="ডেল-ল্যাপটপ ...">
                                                 @error('product_slug_bn')
                                                 <p class="text-danger font-weight-bold">{{ $message }}</p>
@@ -120,10 +122,11 @@
                                             </div>
                                         </div>
                                         {{-- Product Slug Name --}}
+
                                         {{-- Product Tags --}}
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Product Tags English</label>
+                                                <label>Product Tags English <span style="color:red">*</span></label>
                                                 <input type="text" class="form-control" name="product_tags_en" value="{{ $products->product_tags_en }}" data-role="tagsinput" placeholder="Dell, Walton, Hp ...">
                                                 @error('product_tags_en')
                                                     <p class="text-danger font-weight-bold">{{ $message }}</p>
@@ -132,7 +135,7 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Product Tags Bangle</label>
+                                                <label>Product Tags Bangle <span style="color:red">*</span></label>
                                                 <input type="text" class="form-control"  value="{{ $products->product_tags_bn }}" name="product_tags_bn" data-role="tagsinput" placeholder="ডেল, ওয়ালটন, এইচপি ...">
                                                 @error('product_tags_bn')
                                                     <p class="text-danger font-weight-bold">{{ $message }}</p>
@@ -140,11 +143,12 @@
                                             </div>
                                         </div>
                                         {{-- Product Tags --}}
+
                                         {{-- Product Title --}}
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Title English</label>
-                                                <input type="text" class="form-control" value="{{ $products->product_title_en }}" name="product_title_en" placeholder="Top 10 Hp laptop. ...">
+                                                <label>Title English<span style="color:red">*</span></label>
+                                                <input type="text" class="form-control @error('product_title_en') is-invalid @enderror" value="{{ $products->product_title_en }}" name="product_title_en" placeholder="Top 10 Hp laptop. ...">
                                                 @error('product_title_en')
                                                     <p class="text-danger font-weight-bold">{{ $message }}</p>
                                                 @enderror
@@ -152,14 +156,15 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Title Bangle</label>
-                                                <input type="text" class="form-control" value="{{ $products->product_title_bn }}" name="product_title_bn" placeholder="শীর্ষ 10 এইচপি ল্যাপটপ। ...">
+                                                <label>Title Bangle<span style="color:red">*</span></label>
+                                                <input type="text" class="form-control @error('product_title_bn') is-invalid @enderror" value="{{ $products->product_title_bn }}" name="product_title_bn" placeholder="শীর্ষ 10 এইচপি ল্যাপটপ। ...">
                                                 @error('product_title_bn')
                                                     <p class="text-danger font-weight-bold">{{ $message }}</p>
                                                 @enderror
                                             </div>
                                         </div>
                                         {{-- Product Title --}}
+
                                         {{-- Product Size --}}
                                         <div class="col-sm-6">
                                             <div class="form-group">
@@ -180,6 +185,7 @@
                                             </div>
                                         </div>
                                         {{-- Product Size --}}
+
                                         {{-- Product Color --}}
                                         <div class="col-sm-6">
                                             <div class="form-group">
@@ -200,10 +206,11 @@
                                             </div>
                                         </div>
                                         {{-- Product Color --}}
+
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Product Code</label>
-                                                <input type="text" class="form-control"  value="{{ $products->product_code }}" name="product_code" placeholder="100">
+                                                <label>Product Code<span style="color:red">*</span></label>
+                                                <input type="text" class="form-control @error('product_code') is-invalid @enderror"  value="{{ $products->product_code }}" name="product_code" placeholder="100">
                                                 @error('product_code')
                                                     <p class="text-danger font-weight-bold">{{ $message }}</p>
                                                 @enderror
@@ -211,8 +218,8 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Product Code Quantity</label>
-                                                <input type="text" class="form-control" value="{{ $products->product_qty }}" name="product_qty" placeholder="200">
+                                                <label>Product Code Quantity<span style="color:red">*</span></label>
+                                                <input type="text" class="form-control @error('product_qty') is-invalid @enderror" value="{{ $products->product_qty }}" name="product_qty" placeholder="200">
                                                 @error('product_qty')
                                                     <p class="text-danger font-weight-bold">{{ $message }}</p>
                                                 @enderror
@@ -220,8 +227,8 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>Product Selling Price</label>
-                                                <input type="text" class="form-control" value="{{ $products->selling_price  }}" name="selling_price" placeholder="200Tk">
+                                                <label>Product Selling Price<span style="color:red">*</span></label>
+                                                <input type="text" class="form-control @error('selling_price') is-invalid @enderror" value="{{ $products->selling_price  }}" name="selling_price" placeholder="200Tk">
                                                 @error('selling_price')
                                                     <p class="text-danger font-weight-bold">{{ $message }}</p>
                                                 @enderror
@@ -236,6 +243,7 @@
                                                 @enderror
                                             </div>
                                         </div>
+
                                         {{-- Product Description --}}
                                         <div class="col-sm-12">
                                             <div class="form-group">
@@ -256,6 +264,7 @@
                                             </div>
                                         </div>
                                         {{-- Product Description --}}
+
                                         <div class="col-sm-12">
                                             <div class="form-group">
                                                 <div class="form-check">
@@ -291,22 +300,27 @@
                                     </div>
 
                                     <div class="form-group text-center mt-3">
-                                        <input type="submit"  name="submit" value="Update" class="btn btn-success">
+                                        <input type="submit"  name="submit" value="Update" class="btn btn-warning custom_lg_btn">
                                     </div>
                                 </form>
                                 <div class="multiple_img_section" style="border-top:1px solid #ddd; margin-top: 50px">
                                     <div class="row no-gutters" style="margin-top: 50px">
                                         <div class="col-md-4">
-                                            <h2 style="font-size:20px; font-weight:700;margin-bottom:20px; text-align:center">Product Thumbnail</h2>
+                                            <h2 style="font-size: 20px;
+                                            font-weight: 700;
+                                            margin-bottom: 20px;
+                                            background: #dddddd36;
+                                            padding: 10px;
+                                            border-radius: 4px">Product Thumbnail</h2>
                                             <form action="{{ route('single-Image', ['id' => $products->id ]) }}" method="post" enctype="multipart/form-data">
                                                 @csrf
-                                                <div class="card p-3" style="margin-right: 30px; margin-left:15px">
+                                                <div class="card p-3">
                                                     <img width="100%" height="100%" id="single_img" src="{{ asset($products->product_thumbnail) }}" alt="">
                                                     <div class="card-body">
                                                         <div class="card-body mt-2">
                                                             <div class="multipleBodyWrapper d-flex justify-content-between">
                                                                 <div class="deleteBtn" style="margin-right: 40px;">
-                                                                    <input type="submit" class="btn btn-success" value="Update">
+                                                                    <input type="submit" class="btn btn-warning custom_lg_btn" value="Update">
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <input type="file" style="color:transparent; padding:3px" id="imageInput" name="singleImage">
@@ -318,8 +332,14 @@
                                             </form>
                                         </div>
                                         <div class="col-md-8">
-                                            <div class="multipleSection" style="border-left: 2px solid red; padding-left:30px">
-                                                <h2 style="font-size:20px; font-weight:700;margin-bottom:20px; text-align:center">Product Multiple Image</h2>
+                                            <div class="multipleSection" style="padding-left:30px">
+                                                <h2 style="font-size: 20px;
+                                                font-weight: 700;
+                                                margin-bottom: 20px;
+                                                background: #dddddd36;
+                                                padding: 10px;
+                                                border-radius: 4px;
+                                            }">Product Multiple Image</h2>
                                                 <form action="{{ route('edit-multipleImage') }}" method="POST" enctype="multipart/form-data">
                                                     @csrf
                                                     <div class="row">
@@ -331,15 +351,36 @@
                                                                         <div class="imgarea">
                                                                             <img width="100%" height="100%" src="{{ asset($img->photo_name) }}" alt="">
                                                                         </div>
+
                                                                         <div class="multi_img_icon">
                                                                             <a onclick="return confirm('Are you sure?');" href="{{ route('products.delete', ['id' => $img->id])  }}"><i class="fas fa-trash-alt"></i></a>
+
+                                                                            {{-- <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal__{{ $img->id }}"><i class="fas fa-trash-alt"></i></button> --}}
+
+                                                                            <!-- Modal For Delete -->
+                                                                            {{-- <div class="modal fade" id="exampleModal__{{ $img->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                                <div class="modal-dialog" role="document">
+                                                                                    <div class="modal-content">
+                                                                                        <div class="modal-body">
+                                                                                            <span class=""><svg xmlns="http://www.w3.org/2000/svg" height="60" width="60" viewBox="0 0 24 24"><path fill="#f07f8f" d="M20.05713,22H3.94287A3.02288,3.02288,0,0,1,1.3252,17.46631L9.38232,3.51123a3.02272,3.02272,0,0,1,5.23536,0L22.6748,17.46631A3.02288,3.02288,0,0,1,20.05713,22Z"/><circle cx="12" cy="17" r="1" fill="#e62a45"/><path fill="#e62a45" d="M12,14a1,1,0,0,1-1-1V9a1,1,0,0,1,2,0v4A1,1,0,0,1,12,14Z"/></svg></span>
+                                                                                            <h4 class="h4 mb-0 mt-3" style="color: red">Warning</h4>
+                                                                                            <p class="card-text">Are you sure, you want to delete data?</p>
+                                                                                        </div>
+
+                                                                                        <div class="modal-footer">
+                                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                                            <a  href="{{ route('products.delete', ['id' => $img->id])  }}" class="btn btn-danger">Delete</a>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div> --}}
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="card-body mt-2">
                                                                         <div class="multipleBodyWrapper d-flex justify-content-between">
                                                                             <div class="deleteBtn" style="margin-right: 40px;">
-                                                                                <input type="submit" class="btn btn-success" value="Update">
+                                                                                <input type="submit" class="btn btn-warning" value="Update">
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <input type="file" style="color:transparent; padding:3px" name="multiImage[{{ $img->id }}]">
@@ -356,16 +397,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- /.card-body -->
                         </div>
                     </div>
                 </div>
-            </div><!-- /.container-fluid -->
+            </div>
         </section>
-        <!-- /.content -->
     </div>
-    <!-- /.content-wrapper -->
-@endsection()
+@endsection
 
 @section('scripts')
     <script type="text/javascript">
@@ -426,7 +464,7 @@
         });
 
     </script>
-@endsection()
+@endsection
 
 
 

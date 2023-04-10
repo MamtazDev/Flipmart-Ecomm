@@ -5,7 +5,6 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
-
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -77,17 +76,22 @@ class UserController extends Controller
     }
 
     // image upload
+    public function image_settings($image)
+    {
+        $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
+        $location = 'fontend/assets/images/upload/';
+        $final_image = $location.$name_gen;
+        Image::make($image)->resize(200, 200)->save($final_image);
+        return $final_image;
+    }
+
+    // user image update
     public function photoUpload(Request $request){
         if(User::findOrFail(Auth::id())->image == 'fontend/assets/images/upload/profile_img.png'){
-                $image = $request->file('photo');
-                $name_gen = hexdec(uniqid());
-                $img_ext = strtolower($image->getClientOriginalExtension());
-                $img_name = $name_gen . '.' . $img_ext;
-                $upload_location = 'fontend/assets/images/upload/';
-                $last_image = $upload_location.$img_name;
-                Image::make($image)->resize(200, 200)->save($last_image);
+                $profileImage = $request->file('photo');
+                $image = $this->image_settings($profileImage);
                 User::findOrFail(Auth::id())->Update([
-                    'image' => $last_image,
+                    'image' => $image,
                 ]);
                 return redirect()->route('user.dashboard');
             }else {
@@ -96,15 +100,10 @@ class UserController extends Controller
                 if(file_exists($old_image)){
                     unlink($old_image);
                 }
-                $image = $request->file('photo');
-                $name_gen = hexdec(uniqid());
-                $img_ext = strtolower($image->getClientOriginalExtension());
-                $img_name = $name_gen . '.' . $img_ext;
-                $upload_location = 'fontend/assets/images/upload/';
-                $last_image = $upload_location.$img_name;
-                Image::make($image)->resize(200, 200)->save($last_image);
+                $profileImage = $request->file('photo');
+                $image = $this->image_settings($profileImage);
                 User::findOrFail(Auth::id())->Update([
-                    'image' => $last_image,
+                    'image' => $image,
                 ]);
                 return redirect()->route('user.dashboard');
             }

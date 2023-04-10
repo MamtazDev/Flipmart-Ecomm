@@ -586,53 +586,22 @@
 
                         </div><!-- /.tab-content -->
                     </div>
-                    <!-- ============================================== SCROLL TABS : END ============================================== -->
-                    <!-- ============================================== WIDE PRODUCTS ============================================== -->
-                    <div class="wide-banners wow fadeInUp outer-bottom-xs">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="wide-banner cnt-strip">
-                                    <div class="image">
-                                    @forelse($discountBanners as $discountBanner)
-                                        <img class="img-responsive" src="{{ asset($discountBanner->image_left) }}" alt="">
-                                    </div>
-                                    @empty
-                                        <h4 style="color:red; font-weight:700">@if (session()->get('language') == 'bangle') পাওয়া যায় নি @else Not Found @endif </h4>
-                                    @endforelse
-                                </div><!-- /.wide-banner -->
-                            </div><!-- /.col -->
 
-                        </div><!-- /.row -->
-                    </div><!-- /.wide-banners -->
-                    {{-- <div class="wide-banners wow fadeInUp outer-bottom-xs">
-                        <div class="row">
-                            <div class="col-md-7 col-sm-7">
-                                <div class="wide-banner cnt-strip">
-                                    <div class="image">
-                                        @forelse($discountBanners as $discountBanner)
-                                            <img class="img-responsive" src="{{ asset('fontend') }}/assets/images/banners/home-banner1.jpg" alt="">
-                                            <img class="img-responsive" src="{{ asset($discountBanner->image_left) }}" alt="">
-                                        @empty
-                                            <h4 style="color:red; font-weight:700">
-                                                 @if (session()->get('language') == 'bangle') পাওয়া যায় নি @else Not Found @endif </h4>
-                                        @endforelse
-                                    </div>
-
-                                </div><!-- /.wide-banner -->
-                            </div><!-- /.col -->
-                            <div class="col-md-5 col-sm-5">
-                                <div class="wide-banner cnt-strip">
-                                    <div class="image">
-                                        <img class="img-responsive" src="{{ asset('fontend') }}/assets/images/banners/home-banner2.jpg" alt="">
-                                    </div>
-
-                                </div><!-- /.wide-banner -->
-                            </div><!-- /.col -->
-                        </div><!-- /.row -->
-                    </div><!-- /.wide-banners --> --}}
-
-                    <!-- ============================================== WIDE PRODUCTS : END ============================================== -->
-                    <!-- ============================================== FEATURED PRODUCTS ============================================== -->
+                    @if($discountBanners)
+                        @if($discountBanners->status == 'approved')
+                            <div class="wide-banners wow fadeInUp outer-bottom-xs">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="wide-banner cnt-strip">
+                                            <div class="image">
+                                                <img class="img-responsive" src="{{ asset($discountBanners->image_left) }}" alt="">
+                                            </div>
+                                        </div><!-- /.wide-banner -->
+                                    </div><!-- /.col -->
+                                </div><!-- /.row -->
+                            </div><!-- /.wide-banners -->
+                        @endif
+                    @endif
                     <section class="section featured-product wow fadeInUp">
                         <h3 class="section-title">
                             @if(session()->get('language') == 'bangle') বৈশিষ্ট্যযুক্ত পণ্য @else Featured products @endif
@@ -756,32 +725,23 @@
                         </div>
                     </section>
 
-
-
-
                     <!-- ================ FEATURED PRODUCTS : END ================== -->
                     <!-- ================== WIDE PRODUCTS =================== -->
-                    <div class="wide-banners wow fadeInUp outer-bottom-xs">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="wide-banner cnt-strip">
-                                    <div class="image">
-                                        <img class="img-responsive" src="{{ asset('fontend') }}/assets/images/banners/home-banner.jpg" alt="">
-                                    </div>
-                                    <div class="strip strip-text">
-                                        <div class="strip-inner">
-                                            <h2 class="text-right">New Mens Fashion<br>
-                                                <span class="shopping-needs">Save up to 40% off</span></h2>
-                                        </div>
-                                    </div>
-                                    <div class="new-label">
-                                        <div class="text">NEW</div>
-                                    </div><!-- /.new-label -->
-                                </div><!-- /.wide-banner -->
-                            </div><!-- /.col -->
-
-                        </div><!-- /.row -->
-                    </div><!-- /.wide-banners -->
+                    @if($discountBannerTwo)
+                        @if($discountBannerTwo->status == 'approved')
+                            <div class="wide-banners wow fadeInUp outer-bottom-xs">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="wide-banner cnt-strip">
+                                            <div class="image">
+                                                <img src="{{ asset($discountBannerTwo->image ?? '')}}" alt="Add Image" class="img-responsive">
+                                            </div>
+                                        </div><!-- /.wide-banner -->
+                                    </div><!-- /.col -->
+                                </div><!-- /.row -->
+                            </div><!-- /.wide-banners -->
+                        @endif
+                    @endif
                     <!-- ============= ======== WIDE PRODUCTS : END ======== =================== -->
 
                     <!-- ==================== BEST SELLER ======================= -->
@@ -859,12 +819,11 @@
                                         <div class="blog-post-image">
                                             <div class="image">
                                                 {{-- <a href="blog.html"><img src="{{ asset('fontend') }}/assets/images/blog-post/post1.jpg" alt=""></a> --}}
-                                                <a href="blog.html"><img src="{{ asset($blog->thumbnail_image) }}" alt=""></a>
+                                                <a href="{{ route('single.blog', ['id' => $blog->id, 'slug' => $blog->slug]) }}"><img src="{{ asset($blog->thumbnail_image) }}" alt=""></a>
                                             </div>
-                                        </div><!-- /.blog-post-image -->
+                                        </div>
 
                                         <div class="blog-post-info text-left">
-                                            {{-- <h3 class="name"><a href="#">Voluptatem accusantium doloremque laudantium</a></h3> --}}
                                             <h3 class="name"><a href="{{ route('single.blog', ['id' => $blog->id, 'slug' => $blog->slug]) }}">{{ $blog->title }}</a></h3>
                                             <span class="info">By {{ $blog->relationWithUser->name }} &nbsp;|&nbsp; {{ \Carbon\Carbon::parse($blog->created_at)->diffForHumans() }} </span>
                                             <p class="text">{!! substr($blog->description, 0, 200) !!}.... <a href="{{ route('single.blog', ['id' => $blog->id, 'slug' => $blog->slug]) }}">Read More</a></p>

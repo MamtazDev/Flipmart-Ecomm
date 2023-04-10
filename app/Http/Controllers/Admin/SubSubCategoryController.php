@@ -124,11 +124,16 @@ class SubSubCategoryController extends Controller
             "subsubcategory_name_en.required" => "SubCategory English field required",
         ]);
 
-        $checkName = SubSubCategory::where('subcategory_id', $request->subcategory_id)->where('subsubcategory_name_en', $request->subsubcategory_name_en)->where('subsubcategory_name_bn', $request->subsubcategory_name_bn)->exists();
-        if($checkName)
-        {
+
+        $checkName = SubSubCategory::where('subcategory_id', '!=', $request->subcategory_id)
+                    ->where('subsubcategory_name_en',  $request->subsubcategory_name_en)
+                    ->orWhere('subsubcategory_name_bn', $request->subsubcategory_name_bn)
+                    ->exists();
+
+        if($checkName){
             return redirect()->back()->with('fail', 'Sub SubCategory already exists under this subcategory');
         }else{
+
             $result = SubSubCategory::findOrFail($id)->Update([
                 'category_id' => $request->category_id,
                 'subcategory_id' => $request->subcategory_id,
@@ -168,8 +173,5 @@ class SubSubCategoryController extends Controller
         return  json_encode ($result);
 
     }
-
-
-
 
 }

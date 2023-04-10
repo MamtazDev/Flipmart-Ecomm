@@ -3,21 +3,24 @@
 @section('content')
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
+
         <div class="content-header">
             <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active">All User</li>
-                        </ul>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
+                <div class="row">
+                    <div class="col-md-10 m-auto">
+                        <div class="breadrow d-flex justify-content-between mb-3 mt-4">
+                            <div class="item_1">
+                                <ul class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+                                    <li class="breadcrumb-item active">All User</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- /.content-header -->
-        <!-- Main content -->
+
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
@@ -33,7 +36,6 @@
                                 }
                             @endphp
                         @endforeach
-
 
                         <h4 style="font-weight:600; margin-bottom: 20px;">Total User: <span class="badge badge-primary">{{ count($users) }}</span> || Active User <span class="badge badge-primary" style="background-color:green">{{ $onlineUser }}</span></h4>
                         <table class="table table-bordered text-center" id="table_id">
@@ -91,9 +93,30 @@
                                         @else
                                             <a href="{{ route('user.unbanned', $item->id) }}" class="btn btn-success">UnBanned</a>
                                         @endif
-                                            <button data-id="{{ $item->id }}" class="btn btn-danger userDeleteButton">Delete</button>
-                                    </td>
+                                            {{-- <button data-id="{{ $item->id }}" class="btn btn-danger userDeleteButton">Delete</button> --}}
+                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal__{{ $item->id }}">Delete</button>
+                                            <!-- Modal For Delete -->
+                                        <div class="modal fade" id="exampleModal__{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-body">
 
+                                                        <span class=""><svg xmlns="http://www.w3.org/2000/svg" height="60" width="60" viewBox="0 0 24 24"><path fill="#f07f8f" d="M20.05713,22H3.94287A3.02288,3.02288,0,0,1,1.3252,17.46631L9.38232,3.51123a3.02272,3.02272,0,0,1,5.23536,0L22.6748,17.46631A3.02288,3.02288,0,0,1,20.05713,22Z"/><circle cx="12" cy="17" r="1" fill="#e62a45"/><path fill="#e62a45" d="M12,14a1,1,0,0,1-1-1V9a1,1,0,0,1,2,0v4A1,1,0,0,1,12,14Z"/></svg></span>
+                                                        <h4 class="h4 mb-0 mt-3" style="color: red">Warning</h4>
+                                                        <p class="card-text">Are you sure to delete data?</p>
+                                                        <strong class="card-text" style="color: red">Once deleted, you will not be able to recover this data!</strong>
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                                                        <a href="{{ route('user.delete', $item->id) }}" class="btn btn-danger">Delete</a>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -105,7 +128,7 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-@endsection()
+@endsection
 
 
 

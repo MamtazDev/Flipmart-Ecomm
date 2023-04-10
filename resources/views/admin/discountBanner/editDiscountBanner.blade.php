@@ -1,6 +1,7 @@
 @extends('layouts.admin.admin-master')
 @section('title', 'Update DiscountBanner')
-@section('bannerActive') active @endsection
+@section('banner')menu-is-opening menu-open @endsection
+@section('allBannerActive') active @endsection
 @section('content')
 
 <div class="content-wrapper">
@@ -8,11 +9,11 @@
     <div class="content-header">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-10 m-auto">
+                <div class="col-md-8 m-auto">
                     <div class="breadrow d-flex justify-content-between mb-3 mt-4">
                         <div class="item_1">
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('banner.index') }}">All Discount Banner</a></li>
                                 <li class="breadcrumb-item active">Update Banner</li>
                             </ul>
                         </div>
@@ -35,22 +36,22 @@
                                 @csrf
                                 @method('PUT')
                                 <div class="form-group">
-                                    <label>Banner Image: (848px 201px)</label>
+                                    <label>Banner Image: (850px 200px)</label>
                                     <input type="file" onchange="document.getElementById('img_id_left').src=window.URL.createObjectURL(this.files[0])" name="image_left" class="mb-3">
-                                    <img id="img_id_left" width="848px" height="201px" src="{{ asset($banners->image_left) }}" alt="">
+                                    <img id="img_id_left" width="850px" height="200px" src="{{ asset($banners->image_left) }}" alt="">
                                     @error('image_left')
                                         <p class="text-danger font-weight-bold">{{ $message }}</p>
                                     @enderror
                                 </div>
-                                <div class="form-group text-center mt-4">
-                                    <input type="submit"  name="submit" value="Update" class="btn btn-warning btn-lg">
+                                <div class="form-group">
+                                    <input type="submit"  name="submit" value="Update" class="btn btn-warning custom_lg_btn">
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-        </div><!-- /.container-fluid -->
+        </div>
     </section>
 </div>
 

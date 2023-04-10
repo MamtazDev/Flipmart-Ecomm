@@ -41,6 +41,25 @@
             transition:all .2s ease-in-out;
         }
 
+        .badge-color{
+            /* color: #ebeef0; */
+            color: #ffff;
+            background-color: #FD2391;
+        }
+
+        input.btn.btn-warning.custom_lg_btn {
+            padding: 4px 23px;
+            font-size: 20px;
+        }
+
+        a.dropdown-item.deleteBtn {
+            cursor: pointer;
+        }
+
+        .card-header h4 {
+            margin: 0 !important;
+            font-size: 22px !important;
+        }
         .multi_img {
             position: relative;
 
@@ -214,7 +233,6 @@
         }
     </style>
 
-
 </head>
 
 
@@ -230,7 +248,7 @@
     @yield('content')
 
     <footer class="main-footer">
-        <strong>Copyright &copy; 2014-2023 <a href="https://opediatech.com/">Opedia Technologies Limited</a>.</strong>
+        <strong>Copyright &copy; 2021-2023 <a href="https://opediatech.com/">Opedia Technologies Limited</a>.</strong>
         All rights reserved.
         <div class="float-right d-none d-sm-inline-block">
             <b>Version</b> 1.0.0
@@ -308,7 +326,7 @@
 
 </script>
 
-<script type="text/javascript">
+{{-- <script type="text/javascript">
     $(".commentsDeleteButton").on("click", function (){
         let deleteId =  $(this).attr("data-id");
         swal({
@@ -329,7 +347,7 @@
                 }
             });
     });
-</script>
+</script> --}}
 
 
 <script type="text/javascript">

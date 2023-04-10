@@ -23,8 +23,7 @@
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                <!-- Add icons to the links using the .nav-icon class
-                     with font-awesome or any other icon font library -->
+
                 <li class="nav-item">
                     <a href="{{ route('admin.dashboard') }}" class="nav-link @yield('dashboardActive')">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -34,7 +33,7 @@
 
                 <li class="nav-item @yield('page')">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-book"></i>
+                        <i class="nav-icon fas fa-file-alt"></i>
                         <p>Pages<i class="fas fa-angle-left right"></i></p>
                     </a>
                     <ul class="nav nav-treeview">
@@ -44,18 +43,12 @@
                                 <p>Brand Page</p>
                             </a>
                         </li>
-                        {{-- <li class="nav-item">
-                            <a href="pages/examples/contact-us.html" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Contact us</p>
-                            </a>
-                        </li> --}}
                     </ul>
                 </li>
 
                 <li class="nav-item @yield('category')">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-book"></i>
+                        <i class="nav-icon fas fa-th-list"></i>
                         <p>Category<i class="fas fa-angle-left right"></i></p>
                     </a>
                     <ul class="nav nav-treeview">
@@ -83,7 +76,7 @@
 
                 <li class="nav-item @yield('product')">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-book"></i>
+                        <i class="nav-icon fas fa-boxes"></i>
                         <p>Products<i class="fas fa-angle-left right"></i></p>
                     </a>
                     <ul class="nav nav-treeview">
@@ -105,7 +98,7 @@
 
                 <li class="nav-item @yield('slider')">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-book"></i>
+                        <i class="nav-icon fas fa-images"></i>
                         <p>Slider<i class="fas fa-angle-left right"></i></p>
                     </a>
                     <ul class="nav nav-treeview">
@@ -124,16 +117,37 @@
                     </ul>
                 </li>
 
-                <li class="nav-item">
-                    <a href="{{ route('banner.index') }}" class="nav-link @yield('bannerActive')">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>Discount Banner</p>
+                <li class="nav-item @yield('banner')">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-tv"></i>
+                        <p>Banner<i class="fas fa-angle-left right"></i></p>
                     </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('banner.index') }}" class="nav-link @yield('allBannerActive')">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Discount Banner</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('bannerTwo.index') }}" class="nav-link @yield('allBannerTwoActive')">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Discount Banner Two</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('singlePageBanner.index') }}" class="nav-link @yield('allSingleBannerActive')">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Single Page Banner</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
+
 
                 <li class="nav-item @yield('coupon')">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-book"></i>
+                        <i class="nav-icon fas fa-percentage"></i>
                         <p>Coupon<i class="fas fa-angle-left right"></i></p>
                     </a>
                     <ul class="nav nav-treeview">
@@ -166,7 +180,7 @@
                                 <p>Division<i class="fas fa-angle-left right"></i></p>
                             </a>
                             <ul class="nav nav-treeview">
-                                <li class="nav-item innerItem">
+                                <li class="nav-item">
                                     <a href="{{ route('division.index') }}" class="nav-link @yield('alldivisionActive')">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Division</p>
@@ -174,7 +188,7 @@
                                 </li>
                             </ul>
                             <ul class="nav nav-treeview">
-                                <li class="nav-item innerItem">
+                                <li class="nav-item">
                                     <a href="{{ route('division.create') }}" class="nav-link @yield('adddivisionActive')">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Add New Division</p>
@@ -188,7 +202,7 @@
                                 <p>District<i class="fas fa-angle-left right"></i></p>
                             </a>
                             <ul class="nav nav-treeview">
-                                <li class="nav-item innerItem">
+                                <li class="nav-item">
                                     <a href="{{ route('district.index') }}" class="nav-link @yield('alldistrictActive')">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>District</p>
@@ -196,7 +210,7 @@
                                 </li>
                             </ul>
                             <ul class="nav nav-treeview">
-                                <li class="nav-item innerItem">
+                                <li class="nav-item">
                                     <a href="{{ route('district.create') }}" class="nav-link @yield('adddistrictActive')">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Add New District</p>
@@ -210,7 +224,7 @@
                                 <p>State<i class="fas fa-angle-left right"></i></p>
                             </a>
                             <ul class="nav nav-treeview">
-                                <li class="nav-item innerItem">
+                                <li class="nav-item">
                                     <a href="{{ route('state.index') }}" class="nav-link @yield('allstateActive')">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>State</p>
@@ -274,56 +288,35 @@
 
                 <li class="nav-item">
                     <a href="{{ route('report') }}" class="nav-link @yield('reportActive')">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <i class="nav-icon fas fa-file"></i>
                         <p>Reports</p>
                     </a>
                 </li>
+
                 <li class="nav-item">
                     <a href="{{ route('review.index') }}" class="nav-link @yield('reviewOrder')">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <i class="nav-icon fas fa-thumbs-up"></i>
                         <p>Review</p>
                     </a>
                 </li>
-                <li class="nav-item @yield('comment')">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-book"></i>
-                        <p>Comment<i class="fas fa-angle-left right"></i></p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('comments.store') }}" class="nav-link @yield('commentPending')">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>Pending Comment</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('comments.approved.show') }}" class="nav-link @yield('commentApproved')">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>Approved Comment</p>
-                            </a>
-                        </li>
 
-                    </ul>
+                <li class="nav-item @yield('comment')">
+                    <a href="{{ route('comments.store') }}" class="nav-link @yield('commentPending')">
+                        <i class="nav-icon fas fa-comments"></i>
+                        <p>Product-Comments</p>
+                    </a>
                 </li>
 
                 <li class="nav-item @yield('stock')">
-                    <a href="#" class="nav-link @yield('stockActive')">
-                        <i class="nav-icon far fa-sticky-note"></i>
-                        <p>Stock-Management<i class="fas fa-angle-left right"></i></p>
+                    <a href="{{ route('stock.index') }}" class="nav-link @yield('stockActive')">
+                        <i class="nav-icon fas fa-laptop-house"></i>
+                        <p>Stock-Management</p>
                     </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('stock.index') }}" class="nav-link @yield('stockPending')">
-                                <i class="nav-icon fas fa-sticky-note"></i>
-                                <p>All Stock</p>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
 
                 <li class="nav-item @yield('storeroom')">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-book"></i>
+                        <i class="nav-icon fas fa-warehouse"></i>
                         <p>Store Room<i class="fas fa-angle-left right"></i></p>
                     </a>
                     <ul class="nav nav-treeview">
@@ -350,7 +343,7 @@
 
                 <li class="nav-item @yield('blog')">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-book"></i>
+                        <i class="nav-icon fas fa-blog"></i>
                         <p>Blog<i class="fas fa-angle-left right"></i></p>
                     </a>
                     <ul class="nav nav-treeview">
@@ -370,36 +363,20 @@
                 </li>
 
                 <li class="nav-item @yield('blogComment')">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-book"></i>
-                        <p>BlogComment<i class="fas fa-angle-left right"></i></p>
+                    <a href="{{ route('blogcomment.index') }}" class="nav-link @yield('blogcommentPending')">
+                        <i class="nav-icon fas fa-comment-dots"></i>
+                        <p>BlogComments</p>
                     </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('blogcomment.index') }}" class="nav-link @yield('blogcommentPending')">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Comment Pending</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('blogcomments.approved.show') }}" class="nav-link @yield('blogcommentApproved')">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Blog Comment Show</p>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
 
                 <li class="nav-item">
                     <a href="{{ route('social-links.index') }}" class="nav-link @yield('allSocialLinksActive')">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>Social Links</p>
+                        <i class="nav-icon fas fa-cog"></i>
+                        <p>Settings</p>
                     </a>
                 </li>
 
             </ul>
         </nav>
-        <!-- /.sidebar-menu -->
     </div>
-    <!-- /.sidebar -->
 </aside>

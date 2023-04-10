@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('discount_banners', function (Blueprint $table) {
             $table->id();
             $table->string('image_left')->nullable();
+            $table->string('status')->default('pending');
             $table->timestamps();
         });
     }

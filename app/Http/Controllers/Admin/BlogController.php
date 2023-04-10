@@ -45,7 +45,6 @@ class BlogController extends Controller
         $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
         $location = 'backend/images/blog/';
         $final_image = $location.$name_gen;
-        Image::make($image)->save($final_image);
         return $final_image;
     }
 
@@ -54,6 +53,7 @@ class BlogController extends Controller
     {
         $request->validate([
             'title' => 'required',
+            'slug' => 'required',
             'thumbnail_image' => 'required|image|mimes:jpg,png,jpeg,gif,svg',
             'feature_image' => 'required|image|mimes:jpg,png,jpeg,gif,svg',
             'description' => 'required',
@@ -76,8 +76,6 @@ class BlogController extends Controller
         $blog->feature_image = $final_feature_image;
         $blog->save();
         return redirect()-> back()->with('success', 'Blog added success');
-
-
     }
 
     /**
@@ -140,6 +138,7 @@ class BlogController extends Controller
         }
 
         $blog->title = $request->title;
+        $blog->slug = $request->slug;
         $blog->description = $request->description;
         $blog->save();
         return redirect()->route('blog.index')->with('success', 'Blog update success');
@@ -155,9 +154,9 @@ class BlogController extends Controller
     public function destroy($id)
     {
         $blog = Blog::findOrFail($id);
-        // unlink($blog->thumbnail_image);
+        unlink($blog->thumbnail_image);
         unlink($blog->feature_image);
         $blog->delete();
-        return redirect()-> back()->with('success', 'Blog deleted success');
+        return redirect()-> back()->with('success', 'Blog delete success');
     }
 }

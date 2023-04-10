@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\AdminBio;
+use App\Models\Order;
+use App\Models\Product;
 use App\Models\User;
+use App\Models\VisitorCheck;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -13,12 +16,22 @@ use Intervention\Image\Facades\Image;
 class AdminController extends Controller
 {
    public function index(){
-       return view('admin.home');
+        $totalProduct = Product::count();
+        $totalOrder = Order::where('status', 'pending')->count();
+        $totalUser = User::where('role_id', '2')->count();
+        $totalvisitor = VisitorCheck::count();
+
+        //For Chart
+        $monthOrder = [];
+        for ($i=2020; $i <=2023 ; $i++) {
+            $monthOrder []  = Order::where('order_year', $i)->count();
+        }
+        return view('admin.home', compact('totalProduct','totalOrder', 'totalUser','totalvisitor', 'monthOrder'));
    }
 
    public function adminProfileShow(){
-    $adminBio = AdminBio::first();
-    return view('admin.profile', compact('adminBio'));
+   $adminBios = AdminBio::where('auth_id', Auth::user()->id)->get();
+    return view('admin.profile', compact('adminBios'));
     //    return view('admin.profile');
    }
 
@@ -46,8 +59,6 @@ class AdminController extends Controller
         ]);
         return redirect()->route('admin.profile');
     }
-
-
 
     // password update settings
     public function showPasswordUpdatePage(){
@@ -79,39 +90,36 @@ class AdminController extends Controller
             return redirect()->back()->with('fail', "Password and Confirm Password are not matched");
         }
     }
-
     // image upload
+    public function image_settings($image)
+    {
+        $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
+        $location = 'fontend/assets/images/upload/';
+        $final_image = $location.$name_gen;
+        Image::make($image)->resize(200, 200)->save($final_image);
+        return $final_image;
+    }
 
     public function photoUpload(Request $request){
         if(User::findOrFail(Auth::id())->image == 'fontend/assets/images/upload/profile_img.png'){
-            $image = $request->file('photo');
-            $name_gen = hexdec(uniqid());
-            $img_ext = strtolower($image->getClientOriginalExtension());
-            $img_name = $name_gen . '.' . $img_ext;
-            $upload_location = 'fontend/assets/images/upload/';
-            $last_image = $upload_location.$img_name;
-            Image::make($image)->resize(200, 200)->save($last_image);
+            $profileImage = $request->file('photo');
+            $image = $this->image_settings($profileImage);
             User::findOrFail(Auth::id())->Update([
-                'image' => $last_image,
+                'image' => $image,
             ]);
-            return redirect()->route('user.dashboard');
+            return redirect()->route('admin.dashboard');
         }else {
             $img = User::findOrFail(Auth::id());
             $old_image = $img->image;
             if(file_exists($old_image)){
                 unlink($old_image);
             }
-            $image = $request->file('photo');
-            $name_gen = hexdec(uniqid());
-            $img_ext = strtolower($image->getClientOriginalExtension());
-            $img_name = $name_gen . '.' . $img_ext;
-            $upload_location = 'fontend/assets/images/upload/';
-            $last_image = $upload_location.$img_name;
-            Image::make($image)->resize(200, 200)->save($last_image);
+            $profileImage = $request->file('photo');
+            $image = $this->image_settings($profileImage);
             User::findOrFail(Auth::id())->Update([
-                'image' => $last_image,
+                'image' => $image,
             ]);
-            return redirect()->route('user.dashboard');
+            return redirect()->route('admin.dashboard');
         }
     }
 

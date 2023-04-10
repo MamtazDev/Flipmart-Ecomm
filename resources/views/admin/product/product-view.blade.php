@@ -9,7 +9,7 @@
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-sm-10 m-auto">
+                    <div class="col-md-10 m-auto">
                         <div class="breadrow d-flex justify-content-between mb-3 mt-4">
                             <div class="item_1">
                                 <ul class="breadcrumb">
@@ -29,7 +29,7 @@
                     <div class="col-md-10 m-auto">
                         <div class="card card-warning">
                             <div class="card-header">
-                                <h3 class="card-title">{{ $viewProducts->product_name_en }}</h3>
+                                <h4>{{ $viewProducts->product_name_en }}</h4>
                             </div>
                             <div class="card-body p-5">
                                 <table class="table table-bordered p-3">

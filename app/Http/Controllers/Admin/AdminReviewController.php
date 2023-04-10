@@ -27,4 +27,23 @@ class AdminReviewController extends Controller
         ]);
         return redirect()->back()->with('success', 'Pending Success');
     }
+
+    public function destory($id)
+    {
+        ReviewModel::findOrFail($id)->delete();
+        return redirect()->back()->with('success', 'Delete Success');
+    }
+
+    //search
+    public function productReviewApproveSearch()
+    {
+        $datas = ReviewModel::with('user', 'product')->where('status','approved')->orderBy('id', 'desc')->get();
+        return view('admin.review.review', compact('datas'));
+    }
+
+    public function productReviewPendingSearch()
+    {
+        $datas = ReviewModel::with('user', 'product')->where('status','pending')->orderBy('id', 'desc')->get();
+        return view('admin.review.review', compact('datas'));
+    }
 }

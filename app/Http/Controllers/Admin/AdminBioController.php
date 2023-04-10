@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\AdminBio;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,8 +17,7 @@ class AdminBioController extends Controller
      */
     public function index()
     {
-        // $adminBio = AdminBio::all();
-        // return view('admin.profile', compact('adminBio'));
+        //
     }
 
     /**
@@ -42,9 +42,7 @@ class AdminBioController extends Controller
         $adminBio->auth_id = Auth::id();
         $adminBio->company_name = $request->company_name;
         $adminBio->bio = $request->bio;
-        $adminBio->option = json_encode($request->option) ;
         $adminBio->save();
-
         return redirect()->route('admin.profile')->with('success', 'Bio addedd success');
     }
 
@@ -79,10 +77,9 @@ class AdminBioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $adminBio = AdminBio::findOrFail($id);
+        $adminBio = AdminBio::where('auth_id', $id)->first();
         $adminBio->company_name = $request->company_name;
         $adminBio->bio = $request->bio;
-        $adminBio->option = json_encode($request->option) ;
         $adminBio->save();
         return redirect()->route('admin.profile')->with('success', 'Bio Update Success');
     }

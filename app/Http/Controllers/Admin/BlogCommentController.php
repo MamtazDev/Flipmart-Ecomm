@@ -17,7 +17,7 @@ class BlogCommentController extends Controller
      */
     public function index()
     {
-        $blogComments = BlogComment::with('relationWithBlog')->where('status', 'pending')->latest()->get();
+        $blogComments = BlogComment::with('relationWithBlog')->latest()->get();
         return view('admin.blogComment.blogComment-index', compact('blogComments'));
     }
 
@@ -37,31 +37,37 @@ class BlogCommentController extends Controller
         return redirect()->back()->with('success', 'Pending Success');
     }
 
-    public function blogApprovedCommentShow()
-    {
-        $blogCommentsApproves = BlogComment::where('status', 'approved')->latest()->get();
-        return view('admin.blogComment.blogCommentApproved', compact('blogCommentsApproves'));
-    }
-
     public function blogCommentReply($id)
     {
         $blogComment = BlogComment::with('relationWithBlog')->findOrFail($id);
         return view('admin.blogComment.blogCommentReply', compact('blogComment'));
     }
 
-    public function blogCommentReplyStore(Request $request, $id)
+    public function blogCommentReplyStore(Request $request)
     {
         $blogReply = new BlogcommentReply;
         $blogReply->blogcomment_id = $request->blogcomment_id;
         $blogReply->auth_id = Auth::id();
         $blogReply->description = $request->description;
         $blogReply->save();
-        return redirect()->route('blogcomments.approved.show')->with('success', 'Comment Reply Success');
+        return redirect()->route('blogcomment.index')->with('success', 'Comment Reply Success');
     }
 
     public function destroy($id)
     {
         BlogComment::findOrFail($id)->delete();
         return redirect()->back()->with('success', 'Comment Delete Success');
+    }
+
+    //search
+    public function blogCommentSearchApprove()
+    {
+        $blogComments = BlogComment::where('status', 'approved')->latest()->get();
+        return view('admin.blogComment.blogComment-index', compact('blogComments'));
+    }
+    public function blogCommentSearchPending()
+    {
+        $blogComments = BlogComment::where('status', 'pending')->latest()->get();
+        return view('admin.blogComment.blogComment-index', compact('blogComments'));
     }
 }

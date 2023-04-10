@@ -23,6 +23,8 @@ use App\Http\Controllers\Admin\AdminCommentController;
 use App\Http\Controllers\Admin\BlogCommentController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\DiscountBannerController;
+use App\Http\Controllers\Admin\DiscountBannerTwoController;
+use App\Http\Controllers\Admin\PageBannerController;
 use App\Http\Controllers\Admin\SocialLinkController;
 use App\Http\Controllers\Admin\StockManagement;
 
@@ -57,31 +59,33 @@ Route::group(['prefix' => 'admin', 'middleware'=> ['admin', 'auth'] ], function(
     Route::get('/admin-profile', [AdminController::class, 'adminProfileShow'])->name('admin.profile');
     Route::get('/adminNameShow/{id}', [AdminController::class, 'adminNameShow'])->name('admin.NameShow');
     Route::post('/adminNameStore/{id}', [AdminController::class, 'adminNameStore'])->name('adminNameUpdate-store');
+
     // admin email update route
     Route::get('/adminEmailShow/{id}', [AdminController::class, 'adminEmailShow'])->name('adminEmailShow');
     Route::post('/adminEmail/store/{id}', [AdminController::class, 'adminEmailStore'])->name('adminEmailUpdate-store');
+
     // admin update password route
     Route::get('/adminPasswordShow', [AdminController::class, 'showPasswordUpdatePage'])->name('admin.passwordShow');
     Route::post('/password/store', [AdminController::class, 'adminPasswordStore'])->name('updatePassword-store');
-    Route::post('/photoUpload', [UserController::class, 'photoUpload'])->name('file.Upload');
+    Route::post('/photoUpload', [AdminController::class, 'photoUpload'])->name('file.Upload');
 
     // ==================== brand router ==================================
     Route::resource('brands', BrandController::class);
-    // ==================== brand router =================================
 
     // =================== Store Room All route ===================================
     Route::get('/store/room/', [StoreRoomController::class, 'StoreRoomView'])->name('brand.storeRoom');
-    Route::get('/brand/permanentDelete/{id}', [StoreRoomController::class, 'brandPermanentDelete']);
+    Route::get('/brand/permanentDelete/{id}', [StoreRoomController::class, 'brandPermanentDelete'])->name('brand.permanentDelete');
     Route::get('/brand/restore/{id}', [StoreRoomController::class, 'brandRestore'])->name('brand.restore');
+
     // multiple image store
     Route::get('multipleImage/storeRoom', [StoreRoomController::class, 'StoreRoomController'])->name('products.storeroom');
     Route::get('multipleImage/permanentDelete/{id}', [StoreRoomController::class, 'multipleImagePermanenetDelete'])->name('multipleImage.premanentDelete');
     Route::get('multipleImage/restore/{id}', [StoreRoomController::class, 'multipleImageRestore'])->name('multiImage.restore');
+
     // product store
     Route::get('Product/restore/view', [StoreRoomController::class, 'ProductRestoreView'])->name('ProductView');
     Route::get('Product/restore/{id}', [StoreRoomController::class, 'ProductRestore'])->name('product.restore');
     Route::get('Product/permanentDelete/{id}', [StoreRoomController::class, 'ProductImagePermanentDelete'])->name('product.permanentDelete');
-    // =================== Store Room All route ===================================
 
     // =========================== Category routes =======================
     Route::resource('category', CategoryController::class);
@@ -101,7 +105,8 @@ Route::group(['prefix' => 'admin', 'middleware'=> ['admin', 'auth'] ], function(
     Route::get('products/SubSubCategory/ajax/{id}', [ProductController::class, 'SubSubCategoryIdGetByAjax']);
 
     // Edit custom route
-    Route::get('products/edit/{id}', [ProductController::class, 'editFunc'])->name('subcategoryEdit');
+    // Route::get('products/edit/{id}', [ProductController::class, 'editFunc'])->name('subcategoryEdit');
+    Route::get('products/edit/{id}', [ProductController::class, 'productEdit'])->name('product.edit');
 
     // Update ajax data change route
     Route::get('products/edit/updateChangeSubcategory/{id}', [ProductController::class, 'subCategoryIdGetByAjax']);
@@ -168,38 +173,61 @@ Route::group(['prefix' => 'admin', 'middleware'=> ['admin', 'auth'] ], function(
     Route::get("/user/userUnBanned/{unbanned_id}", [RoleController::class, 'userUnBanned'])->name("user.unbanned");
     Route::get("/user/adminRoleChange/{admin_role_change_id}", [RoleController::class, 'adminRoleChange'])->name("admin.role.change");
     Route::get("/user/userRleChange/{role_change_id}", [RoleController::class, 'userRoleChange'])->name("user.role.change");
-    Route::get("/user/delete/{id}", [RoleController::class, 'userDelete'])->name("user.delete");
+    Route::get("/user/delete/{id}", [RoleController::class, 'userDelete'])->name('user.delete');
 
     // review
     Route::get("/review", [AdminReviewController::class, 'index'])->name("review.index");
+    Route::delete("/review/delete/{id}", [AdminReviewController::class, 'destory'])->name("review.destory");
     Route::get("/review/approved/{id}", [AdminReviewController::class, 'reviewApproved'])->name("review.approved");
     Route::get("/review/pending/{id}", [AdminReviewController::class, 'reviewPending'])->name("review.pending");
 
+    Route::get('product-review/approved/search', [AdminReviewController::class, 'productReviewApproveSearch'])->name('review.approved.search');
+    Route::get('product-review/pending/search', [AdminReviewController::class, 'productReviewPendingSearch'])->name('review.pending.search');
+
     // admin comment controller
     Route::get('comments', [AdminCommentController::class, 'adminCommentIndex'])->name('comments.store');
-    Route::get('comments/approved/show/', [AdminCommentController::class, 'adminApprovedCommentShow'])->name('comments.approved.show');
+    // Route::get('comments/approved/show/', [AdminCommentController::class, 'adminApprovedCommentShow'])->name('comments.approved.show');
     Route::get("/comments/approved/{id}", [AdminCommentController::class, 'commentsApproved'])->name("comments.approved");
     Route::get("/comments/pending/{id}", [AdminCommentController::class, 'commentsPending'])->name("comments.pending");
     Route::get("/comments/replay/{id}", [AdminCommentController::class, 'commentsReplay'])->name('adminComments.replay');
     Route::post("/comments/replay/store", [AdminCommentController::class, 'commentsReplayStore'])->name('comments.replay.store');
     Route::get("/comment/delete/{id}", [AdminCommentController::class, 'commentDelete'])->name('comments.delete');
 
+    Route::get('product-comments/approved/search', [AdminCommentController::class, 'productCommentApproveSearch'])->name('comments.approved.search');
+    Route::get('product-comments/pending/search', [AdminCommentController::class, 'productCommentPendingSearch'])->name('comments.pending.search');
+
+
     //stock management
     Route::resource('stock', StockManagement::class);
+    Route::post('stock/subcategory', [StockManagement::class, 'stockCheckBysubCategory'])->name('searchBySubCategory');
+    Route::post('stock/sub/subcategory', [StockManagement::class, 'stockCheckBysubCategory'])->name('searchBySubSubCategory');
+    Route::get('stock/subsubcategory/ajax/', [StockManagement::class, 'SubCategoryAjaxShow'])->name('StockSubCategoryAjaxShow');
+    Route::get('stock/sub/subsubcategory/ajax/', [StockManagement::class, 'SubSubCategoryAjaxShow'])->name('StockSubSubCategoryAjaxShow');
 
     //Discount Banner
     Route::resource('banner', DiscountBannerController::class);
+    Route::post('banner/on', [DiscountBannerController::class, 'pageBannerStatusOn'])->name('discount.banner.on');
+
+    //Discount Banner Two
+    Route::resource('bannerTwo', DiscountBannerTwoController::class);
+    Route::post('bannerTwo/on', [DiscountBannerTwoController::class, 'pageBannerStatusOn'])->name('discount.bannerTwo.on');
+
+    //Single Page Banner
+    Route::resource('singlePageBanner', PageBannerController::class);
+    Route::post('pageBanner', [PageBannerController::class, 'pageBannerStatusOn'])->name('page.banner.on');
 
     //Blog
     Route::resource('blog', BlogController::class);
 
     //BlogComment
     Route::resource('blogcomment', BlogCommentController::class);
-    Route::get('blogcomment/approved/show', [BlogCommentController::class, 'blogApprovedCommentShow'])->name('blogcomments.approved.show');
     Route::get('blogcomment/approved/{id}', [BlogCommentController::class, 'blogCommentsApproved'])->name('blogcomment.approved');
     Route::get('blogcomment/pending/{id}', [BlogCommentController::class, 'blogCommentsPending'])->name('blogcomment.pending');
     Route::get('blogcomment/reply/{id}', [BlogCommentController::class, 'blogCommentReply'])->name('blogcomments.replay');
     Route::post('blogcomment/reply/{id}', [BlogCommentController::class, 'blogCommentReplyStore'])->name('blogcomments.replay.store');
+
+    Route::get('approved/search/approve', [BlogCommentController::class, 'blogCommentSearchApprove'])->name('blogcomments.approved.search');
+    Route::get('approved/search/pending', [BlogCommentController::class, 'blogCommentSearchPending'])->name('blogcomments.pending.search');
 
     // Social Links
     Route::resource('social-links', SocialLinkController::class);
@@ -248,18 +276,22 @@ Route::group(['prefix' => 'user', 'middleware'=> ['user', 'auth'],], function() 
     // Order Route
     Route::get('/orderView/{order_id}', [OrderController::class, 'ViewOrder']);
     Route::get('/downloadInvoice/{invoice_id}', [OrderController::class, 'downloadInvoice']);
+
     // return order
     Route::post("/return/order/{order_id}", [OrderController::class, 'returnOrder'])->name('order.return');
 
     // product review
     Route::get("/product/review/{product_id}", [ReviewController::class, 'productReview'])->name('review.create');
     Route::post("/review/store", [ReviewController::class, 'productReviewStore'])->name('review.store');
+
     // product comment system
     Route::post("/comment/store", [CommentController::class, 'commentStore'])->name('comment.store');
     // Route::post("/comment/index", [CommentController::class, 'commentIndex']);
 
     //user blog Comment
     Route::post('/blog/comment/store', [BlogUserCommentController::class, 'blogCommentStore'])->name('blog.comment.store');
+
+    //Review
 });
 
 Route::group([ 'middleware'=> ['user', 'auth']], function() {
@@ -286,36 +318,44 @@ Route::group([ 'middleware'=> ['user', 'auth']], function() {
     Route::get('/single/blog/{id}/{slug}', [FontEndController::class, 'singleBlog'])->name('single.blog');
     Route::post('/blogcomment/more', [FontEndController::class, 'commentMore'])->name('blogcomments.load-more');
 
-
     // ====================== card settings start ======================
     Route::get('/product/card/view/{id}', [CardController::class, 'productCardView']);
     Route::post('/product/card/add/{id}', [CardController::class, 'productAddToCard']);
     Route::get('/ProductMiniCardView', [CardController::class, 'ProductMiniCardView']);
     Route::get('/miniCartRemove/{rowId}', [CardController::class, 'miniCartRemove']);
     // ==================== card settings end ============================
+
     //==================== tag wise product show ==========================
     Route::get('/product/tags/{tag}', [FontEndController::class, 'tagWiseProductsShow']);
+
+
     // ============================ subCategory wise product show =========
     Route::get('subCategory/product/{id}', [FontEndController::class, 'subcategoryWiseProductShow']);
     Route::get('subSubCategory/product/{id}', [FontEndController::class, 'subSubcategoryWiseProductShow']);
+
     // ===================== Frontend Language route =======================
     Route::get('/bangle/language/', [LanguageController::class, 'Bangle'])->name('bangle.language');
     Route::get('/english/language/', [LanguageController::class, 'English'])->name('english.language');
+
     //========================= wishlist start ==============================
     Route::get('/wishListPageView', [wishlistController::class, 'wishlistPageView']);
     Route::get('/getWishListData', [wishlistController::class, 'getWishListData']);
     Route::get('/removeWishlistData/{id}', [wishlistController::class, 'removeWishlistData']);
     Route::post('/add-to-userWishList/{product_id}', [wishlistController::class, 'addWishlist']);
+
     //========================= wishlist end ==================================
     Route::get('my-cart/', [CartPageController::class, 'cartIndex'])->name('cart');
     Route::get('checkout', [CartPageController::class, 'checkout'])->name('checkout');
+
     // social login route
     Route::get('login/google', [LoginController::class, 'loginWithGoogle'])->name('login.google');
     Route::get('login/google/callback/', [LoginController::class, 'loginWithGoogleCallback']);
     Route::get('login/github', [LoginController::class, 'loginWithGithub'])->name('login.facebook');
     Route::get('login/github/callback/', [LoginController::class, 'loginWithGithubCallback']);
+
     // order tracking route
     Route::post('order/track/', [OrderTrackController::class, 'orderTrack'])->name('order.track');
+
     // product search
     Route::get('product-search', [SearchController::class, 'productSearch'])->name('search.product');
     Route::post('searchProductByAjax', [SearchController::class, 'searchProductByAjax']);
